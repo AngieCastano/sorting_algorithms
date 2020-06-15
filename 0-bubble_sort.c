@@ -10,6 +10,8 @@ void bubble_sort(int *array, size_t size)
 	size_t temp = 0;
 	int validations = 0;
 
+	if (size < 2 || !array)
+		return;
 	for (i = 0; array[i]; i++)
 	{
 		temp = 0;
