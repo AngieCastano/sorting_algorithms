@@ -5,8 +5,11 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *tmp = *list, *tmp2;
+	listint_t *tmp = NULL, *tmp2;
 
+	if (!list || !(*list))
+		return;
+	tmp = *list;
 	while (tmp->next && tmp)
 	{
 		if (tmp->next->n < tmp->n)
