@@ -1,5 +1,5 @@
 #include "sort.h"
-
+void swap_prev(listint_t *node);
 /**
  * insertion_sort_list - sorts list using insertion sort
  * @list: pointer to the head of the list
