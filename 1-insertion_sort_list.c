@@ -1,7 +1,8 @@
 #include "sort.h"
+
 /**
- * insertion_sort_list - insertion sort algorith
- * @list: list to sort
+ * insertion_sort_list - sorts list using insertion sort
+ * @list: pointer to the head of the list
  */
 void insertion_sort_list(listint_t **list)
 {
@@ -35,14 +36,12 @@ void insertion_sort_list(listint_t **list)
 }
 
 /**
- * swap_in_reverse- swaps backwards
- * @tmp: temporal from whar to swap in reverse
- * @list: list to print
- * Return: the temporal pointer address
+ * swap_prev - swaps the current node with its previous node
+ * @node: node to swap
  */
-listint_t *swap_in_reverse(listint_t *tmp, listint_t **list)
+void swap_prev(listint_t *node)
 {
-        listint_t *pp, *p, *n;
+	listint_t *pp, *p, *n;
 
 	if (node->prev == NULL)
 		return;
