@@ -5,42 +5,32 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *tmp = NULL, *tmp2;
+	listint_t *curr, *temp_n;
 
-	if (!list || !(*list))
+	if (list == NULL || *list == NULL)
 		return;
-	tmp = *list;
-	while (tmp->next && tmp)
+	curr = (*list)->next;
+	while (curr != NULL)
 	{
-		if (tmp->next->n < tmp->n)
+		if (curr->prev->n > curr->n)
 		{
-			if (tmp->next->next)
+			temp_n = curr->next;
+			while (curr->prev != NULL)
 			{
-				tmp->next = tmp->next->next;
-				tmp->next->prev->prev = tmp->prev;
-				tmp->prev = tmp->next->prev;
-				tmp->next->prev->next = tmp;
-				tmp->next->prev = tmp;
-				if (tmp->prev->prev)
-					tmp->prev->prev->next = tmp->prev;
-				print_list(*list);
-				tmp2 = tmp;
-				swap_in_reverse(tmp2, list);
+				if (curr->n < curr->prev->n)
+				{
+					swap_prev(curr);
+					while ((*list)->prev != NULL)
+						(*list) = (*list)->prev;
+					print_list(*list);
+				}
+				else
+					break;
 			}
-			else
-			{
-				tmp->next->prev = tmp->prev;
-				tmp->next->next = tmp;
-				tmp->prev = tmp->next;
-				tmp->next = NULL;
-				tmp->prev->prev->next = tmp->prev;
-				print_list(*list);
-				tmp = swap_in_reverse(tmp2, list);
-				*list = tmp;
-			}
+			curr = temp_n;
 		}
 		else
-			tmp = tmp->next;
+			curr = curr->next;
 	}
 }
 
@@ -52,35 +42,19 @@ void insertion_sort_list(listint_t **list)
  */
 listint_t *swap_in_reverse(listint_t *tmp, listint_t **list)
 {
-	while (tmp->prev && tmp)
-	{
-		if (tmp->prev->n > tmp->n)
-		{
-			if (tmp->prev->prev)
-			{
-				tmp->prev = tmp->prev->prev;
-				tmp->prev->next->next = tmp->next;
-				tmp->next = tmp->prev->next;
-				tmp->prev->next->prev = tmp;
-				tmp->prev->next = tmp;
-				if (tmp->next->next)
-					tmp->next->next->prev = tmp->next;
-				print_list(*list);
+        listint_t *pp, *p, *n;
 
-			}
-			else
-			{
-				tmp->prev->next = tmp->next;
-				tmp->prev->prev = tmp;
-				tmp->next = tmp->prev;
-				tmp->prev = NULL;
-				tmp->next->next->prev = tmp->next;
-				*list = tmp;
-				print_list(*list);
-			}
-		}
-		else
-			tmp = tmp->prev;
-	}
-	return (tmp);
+	if (node->prev == NULL)
+		return;
+	p = node->prev;
+	pp = p->prev;
+	n = node->next;
+	if (pp != NULL)
+		pp->next = node;
+	node->prev = pp;
+	node->next = p;
+	p->prev = node;
+	p->next = n;
+	if (n != NULL)
+		n->prev = p;
 }
