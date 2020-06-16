@@ -37,41 +37,29 @@ void quick_helper(int *array, int size, int start, int end)
  */
 int partition(int *array, int size, int start, int end)
 {
-        int left, right, pivot;
-
-	left = start - 1;
-	right = end + 1;
-	pivot = array[end];
-	while (1)
+        int pivot = array[end];
+	int left = start, j, tmp1;
+	for(j = start; j < end; j++)
 	{
-		do {
-			left++;
-		} while (array[left] < pivot);
-		do {
-			right--;
-		} while (array[right] > pivot);
-		if (left < right)
+		if(array[j] <= pivot)
 		{
-			swap(array, left, right);
-			print_array(array, size);
+			if (left != j)
+			{
+				tmp1 = array[left];
+				array[left] = array[j];
+				array[j] = tmp1;
+				print_array(array, size);
+			}
+			left++;
 		}
-		else
-			return (left);
 	}
-	
-}
-/**
- * swap - swaps two position given the array
- * @array: array to elements
- * @index_a: index a to swap
- * @index_b: index b to swap
- */
-void swap(int *array, int index_a, int index_b)
-{
-	int temp;
-
-	temp = array[index_a];
-	array[index_a] = array[index_b];
-	array[index_b] = temp;
+	if (left != end)
+	{
+		tmp1 = array[left];
+		array[left] = array[end];
+		array[end] = tmp1;
+		print_array(array,size);
+	}
+	return(left);
 }
 
