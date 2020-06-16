@@ -6,10 +6,9 @@
  */
 void quick_sort(int *array, size_t size)
 {
-
-	if (!array || (!*array || size < 2))
+	if (array == NULL || size < 1)
 		return;
-	quick_helper(array, size, 0, size - 1);
+	quick_helper(array,size,0,size - 1);
 }
 /**
  * quick_helper - quick  helpre
@@ -22,10 +21,10 @@ void quick_helper(int *array, int size, int start, int end)
 {
 	int pivot = 0;
 
-	if (start <= end)
+	if (start >= end)
 		return;
 	pivot = partition(array, size, start, end);
-	quick_helper(array, size, start, pivot - 1);
+        quick_helper(array, size, start, pivot -1);
 	quick_helper(array, size, pivot, end);
 }
 /**
@@ -38,22 +37,41 @@ void quick_helper(int *array, int size, int start, int end)
  */
 int partition(int *array, int size, int start, int end)
 {
-	int i = 0, j = 0, pivot = array[end], tmp = 0;
+        int left, right, pivot;
 
-	for (j = start; j <= end; j++)
+	left = start - 1;
+	right = end + 1;
+	pivot = array[end];
+	while (1)
 	{
-		if (array[j] <= pivot)
+		do {
+			left++;
+		} while (array[left] < pivot);
+		do {
+			right--;
+		} while (array[right] > pivot);
+		if (left < right)
 		{
-			tmp = array[j];
-			array[j] = array[i];
-			array[i] = tmp;
-			i++;
+			swap(array, left, right);
 			print_array(array, size);
 		}
+		else
+			return (left);
 	}
-	tmp = array[i + 1];
-	array[i + 1] = array[end];
-	array[end] = tmp;
-	print_array(array, size);
-	return(i + 1);
+	
 }
+/**
+ * swap - swaps two position given the array
+ * @array: array to elements
+ * @index_a: index a to swap
+ * @index_b: index b to swap
+ */
+void swap(int *array, int index_a, int index_b)
+{
+	int temp;
+
+	temp = array[index_a];
+	array[index_a] = array[index_b];
+	array[index_b] = temp;
+}
+
