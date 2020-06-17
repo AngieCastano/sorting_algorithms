@@ -12,7 +12,9 @@ void shell_sort(int *array, size_t size)
 
 	if (array == NULL || size < 1)
 		return;
-	for (gap = size / 3 + 1; gap > 0; gap = gap / 3)
+	for (gap = 1; gap < size / 3; gap = gap * 3 + 1)
+		;
+	for (; gap > 0; gap = gap / 3)
 		{
 			impri = 0;
 			for (j = gap; j < size; j += 1)
