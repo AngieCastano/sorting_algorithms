@@ -1,7 +1,8 @@
 #include "sort.h"
 void swap_prev(listint_t *node);
 listint_t *forward(listint_t *start_elemet, listint_t **list);
-void backward(listint_t *start_elemet, listint_t **list);
+listint_t *backward(listint_t *start_elemet, listint_t **list);
+void cocktail_helper(listint_t *start, listint_t *end, listint_t **list);
 /**
  * cocktail_sort_list - cocktail_sort_list
  * @list: list to sort
@@ -10,13 +11,24 @@ void cocktail_sort_list(listint_t **list)
 {
 	if (list == NULL || *list == NULL)
 		return;
-	listint_t *end_rest = NULL;
+	cocktail_helper(*list, NULL ,list);
+}
+/**
+ * quick_helper - quick helper
+ * @start: start of the list
+ * @end: end of the list
+ * @list: list
+ */
+void cocktail_helper(listint_t *start, listint_t *end, listint_t **list)
+{
+	if (list == NULL || *list == NULL)
+		return;
 
-        end_rest = forward(*list, list);
-	printf("end_rest->n = %i\n", end_rest->n);
-//	printf("before backward\n");
-//        backward(end_rest, list);
-//	printf("after backward\n");
+	end = forward(*list, list);
+	printf("end = %i\n", end->n);
+	start = backward(end, list);
+	printf("antes de llamarse\n");
+	cocktail_helper(start, end, list);
 }
 /**
  * forward - coktail helper, lets the biggest at the end
@@ -24,15 +36,16 @@ void cocktail_sort_list(listint_t **list)
  */
 listint_t *forward(listint_t *start_elemet, listint_t **list)
 {
-	listint_t *curr, *temp_n;
+	listint_t *curr, *temp_n, *tmp_curr;
 
 	curr = start_elemet->next;
+	tmp_curr = curr;
 	while (curr != NULL)
 	{
+		tmp_curr = curr;
 		if (curr->prev->n > curr->n)
 		{
 			temp_n = curr->next;
-
 			while (curr->prev != NULL)
 			{
 				if (curr->n < curr->prev->n)
@@ -42,7 +55,6 @@ listint_t *forward(listint_t *start_elemet, listint_t **list)
  						(*list) = (*list)->prev;
 					print_list(*list);
 					curr = curr->next;
-					printf("curr->n = %i\n", curr->n);
 				}
 				else
 					break;
@@ -52,21 +64,20 @@ listint_t *forward(listint_t *start_elemet, listint_t **list)
 		else
 			curr = curr->next;
 	}
-	printf("curr->pev->n = %i\n", curr->prev->n);
-	return (NULL);
+	return (tmp_curr);
 }
 /**
  * backward - coktail helper, lets the smallest at the beginning
  * @start_elemet: start element of the end
  * @list: list to print
  */
-void backward(listint_t *start_elemet, listint_t **list)
+listint_t *backward(listint_t *start_elemet, listint_t **list)
 {
 	listint_t *curr;
 
 	if (list == NULL || *list == NULL)
-		return;
-	curr = start_elemet->next;
+		return(NULL);
+	curr = start_elemet;
 	if (curr != NULL)
 	{
 		while (curr->prev != NULL)
@@ -78,10 +89,9 @@ void backward(listint_t *start_elemet, listint_t **list)
 					(*list) = (*list)->prev;
 				print_list(*list);
 			}
-			else
-				break;
 		}
 	}
+	return(curr->prev);
 }
 /**
  * swap_prev - swaps the current node with its previous node
