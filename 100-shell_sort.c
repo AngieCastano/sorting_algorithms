@@ -7,29 +7,25 @@
  */
 void shell_sort(int *array, size_t size)
 {
-	int tmp;
-	size_t gap, i, j;
+	int temp, impri;
+	size_t j, gap, k;
 
-	if (array == NULL || size < 2)
+	if (array == NULL || size < 1)
 		return;
-        
-	for (gap = 1; gap < size / 3;gap = gap * 3 + 1)
-	{
-		printf("%lu\n",gap);
-	}
-	
-	for (gap = size / 2; gap > 0 ;gap = gap / 2)
-	{
-		for (j = gap, i = 0; j < size; i++, j++)
+	for (gap = size / 3 + 1; gap > 0; gap = gap / 3)
 		{
-			if (array[i] > array[j] && j < size)
+			impri = 0;
+			for (j = gap; j < size; j += 1)
 			{
-				tmp = array[i];
-				array[i] = array[j];
-				array[j] = tmp;
-				printf("%lu",gap);
-				print_array(array,size);
+				temp = array[j];
+				for (k = j; k >= gap && array[k - gap] > temp; k -= gap)
+				{
+					array[k] = array[k - gap];
+				}
+				array[k] = temp;
+				impri = 1;
 			}
+			if (impri == 1)
+				print_array(array, size);
 		}
-	}
 }
