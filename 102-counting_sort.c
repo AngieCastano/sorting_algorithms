@@ -15,16 +15,10 @@ void counting_sort(int *array, size_t size)
 			l_num = array[i];
 	c_array = malloc(sizeof(int) * (l_num));
 	if (c_array == NULL)
-	{
-		free(c_array)
 		return;
-	}
 	o_array = malloc(sizeof(int) * (size));
 	if (o_array == NULL)
-	{
-		free(o_array);
 		return;
-	}
 	for (i = 0; i < size; i++)
 		c_array[array[i]]++;
 	for (j = 1; j < l_num + 1; j++)
