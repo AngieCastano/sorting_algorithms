@@ -13,7 +13,7 @@ void counting_sort(int *array, size_t size)
 	for (i = 0, l_num = 0; i < size; i++)
 		if (array[i] > l_num)
 			l_num = array[i];
-	c_array = malloc(sizeof(int) * (l_num));
+	c_array = malloc(sizeof(int) * (l_num + 1));
 	if (c_array == NULL)
 		return;
 	o_array = malloc(sizeof(int) * (size));
