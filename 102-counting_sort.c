@@ -10,6 +10,8 @@ void counting_sort(int *array, size_t size)
 	int l_num, j, idx, pl;
 	size_t i;
 
+	if (array == NULL || size < 2)
+		return;
 	for (i = 0, l_num = 0; i < size; i++)
 		if (array[i] > l_num)
 			l_num = array[i];
