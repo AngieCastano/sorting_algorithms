@@ -9,11 +9,10 @@ void counting_sort(int *array, size_t size)
 	int *c_array, *o_array;
 	int l_num, j, idx, pl;
 	size_t i;
-	/* find key */
+
 	for (i = 0, l_num = 0; i < size; i++)
 		if (array[i] > l_num)
 			l_num = array[i];
-	
 	c_array = malloc(sizeof(int) * (l_num));
 	if (c_array == NULL)
 	{
